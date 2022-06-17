@@ -1,7 +1,18 @@
 const express = require('express');
 const router = express.Router();
-  
-  //create message
+const {Message} = require("../../models")
+
+  router.get("/", (req, res) => {
+    Message.findAll()
+      .then(dbMessages => {
+        res.json(dbMessages);
+      })
+      .catch(err => {
+        console.log(err);
+        res.status(500).json({ msg: "an error occured", err });
+      });
+  });
+
   router.post("/", (req, res) => {
     Message.create({
       name: req.body.name,
